@@ -7,8 +7,6 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:quote_cast_app/core/constants/app_routes.dart';
 import 'package:quote_cast_app/core/extensions/context_extension.dart';
 import 'package:quote_cast_app/core/extensions/string_extension.dart';
-import 'package:quote_cast_app/providers/user_session_provider.dart';
-import 'package:quote_cast_app/screens/login_screen.dart';
 
 import '../data/models/api_exception.dart';
 import '../providers/auth_controller_provider.dart';
@@ -47,6 +45,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _usernameController,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     labelText: 'Username',
                   ),
@@ -60,6 +59,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
                   ),
@@ -75,6 +75,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: !passwordVisible,
                   validator: (value) {
@@ -89,6 +90,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _confirmPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     suffixIcon: IconButton(
