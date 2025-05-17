@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_cast_app/data/models/quote_model.dart';
+import 'package:quote_cast_app/data/models/user_model.dart';
 import 'package:quote_cast_app/data/models/weather_model.dart';
 
 import '../../core/constants/string_const.dart';
@@ -182,6 +183,22 @@ class ApiService {
         "quote": "${quote.content} By ${quote.author}",
       });
       return res.data["generatedText"];
+    } on DioException catch (e) {
+      throw ApiException(_handleDioError(e));
+    } on Exception catch (e) {
+      throw Exception('An unknown error occurred: $e');
+    }
+  }
+
+  Future<List<UserModel>> getAllUsers() async {
+    try {
+      final res = await _dio.get('/get-all-users');
+      final data = res.data;
+      final List<UserModel> users = [];
+      for (var user in data) {
+        users.add(UserModel.fromJson(user));
+      }
+      return users;
     } on DioException catch (e) {
       throw ApiException(_handleDioError(e));
     } on Exception catch (e) {
