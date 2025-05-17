@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quote_cast_app/screens/home/home_screen.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../data/models/quote_model.dart';
 import '../../data/services/api_service.dart';
@@ -39,7 +39,20 @@ class QuoteWidget extends ConsumerWidget {
       error: (error, st) {
         return Center(child: Text('Error: $error'));
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Text('Loading...'),
+          ),
+        );
+      },
     );
   }
 }
