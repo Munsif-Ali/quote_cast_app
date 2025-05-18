@@ -20,10 +20,8 @@ class ApiService {
   final Dio _dio = Dio();
   final _storage = const FlutterSecureStorage();
 
-  static const baseUrl = 'https://j63vr81n-3000.inc1.devtunnels.ms/api';
-
   ApiService(this.ref) {
-    _dio.options.baseUrl = baseUrl;
+    _dio.options.baseUrl = StringConst.baseUrl;
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final accessToken =
