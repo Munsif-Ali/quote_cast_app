@@ -1,16 +1,31 @@
-# quote_cast_app
+# QuoteCast App
 
-A new Flutter project.
+## Setup Instructions
 
-## Getting Started
+1. Clone the repository:
 
-This project is a starting point for a Flutter application.
+   ```bash
+   git clone https://github.com/Munsif-Ali/quote_cast_app.git
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Navigate to the project directory:
+   ```bash
+    cd quote_cast_app
+   ```
+3. Change the API Base URL in the `lib/core/constants/string_const.dart` file to point to your backend server:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+   ```dart
+   class StringConst {
+    ..................
+     static const String baseUrl = 'http://YOUR_BACKEND_SERVER_IP:3000/api';
+    }
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. Install the required dependencies:
+   ```bash
+    flutter pub get
+   ```
+5. Run the application:
+   ```bash
+    flutter run
+   ```
