@@ -11,6 +11,8 @@ import 'package:quote_cast_app/core/styles/app_colors.dart';
 import 'package:quote_cast_app/data/models/api_exception.dart';
 import 'package:quote_cast_app/providers/auth_controller_provider.dart';
 
+import '../providers/user_session_provider.dart';
+
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
@@ -19,9 +21,8 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _emailController =
-      TextEditingController(text: "munsifali@quotecast.com");
-  final _passwordController = TextEditingController(text: "munsif@quotecast25");
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -88,7 +89,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     },
                   ),
                 ),
-                obscureText: true,
+                obscureText: !passwordVisible,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
@@ -148,7 +149,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         context.loaderOverlay.hide();
 
         context.showSnackBar('Login successful');
-
+        ref.invalidate(userSessionProvider);
         context.navigateAndRemoveUntil(AppRoutes.home);
       } on ApiException catch (e) {
         context.loaderOverlay.hide();

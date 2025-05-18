@@ -125,6 +125,8 @@ class ApiService {
       throw ApiException(_handleDioError(e));
     } on Exception catch (e) {
       throw Exception('An unknown error occurred: $e');
+    } finally {
+      await _storage.deleteAll();
     }
   }
 
@@ -167,6 +169,7 @@ class ApiService {
     try {
       final res = await _dio.get('/weather?city=$city');
       final data = res.data;
+      log("Weather response: ${data.runtimeType} status: ${res.statusCode} accessToken: ${await _storage.read(key: StringConst.accessTokenKey)}");
       final weatherModel = WeatherModel.fromJson(data);
       return weatherModel;
     } on DioException catch (e) {
@@ -215,13 +218,20 @@ class ApiService {
       final data = e.response?.data;
 
       if (statusCode == 400 || statusCode == 401) {
-        return data['message'] ?? "Invalid credentials.";
+        if (data["message"] case String msg) {
+          return msg;
+        }
+        return "Invalid credentials.";
       } else if (statusCode == 500) {
         return "Server error. Please try again later.";
       } else if (statusCode == 404) {
         return "Resource not found.";
       } else {
-        return data['message'] ?? "Something went wrong.";
+        if (data["message"] case String msg) {
+          return msg;
+        } else {
+          return "An unknown error occurred.";
+        }
       }
     } else if (e.type == DioExceptionType.unknown) {
       return "No Internet connection.";

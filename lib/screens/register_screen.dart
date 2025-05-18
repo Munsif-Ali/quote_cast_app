@@ -10,6 +10,7 @@ import 'package:quote_cast_app/core/extensions/string_extension.dart';
 
 import '../data/models/api_exception.dart';
 import '../providers/auth_controller_provider.dart';
+import '../providers/user_session_provider.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -177,6 +178,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         if (!mounted) return;
         context.loaderOverlay.hide();
         context.showSnackBar('Registration successful', isError: false);
+        ref.invalidate(userSessionProvider);
         context.navigateAndRemoveUntil(AppRoutes.home);
       } on ApiException catch (e) {
         context.loaderOverlay.hide();
